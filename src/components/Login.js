@@ -4,19 +4,25 @@ import axios from "axios";
 const Login = ({ setIsLoggedIn }) => {
 
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
+
 
   const handleLogin = async () => {
 
     try {
 
       const response = await axios.post(
-        "https://aifsdbackend.onrender.com",
+
+        "https://aifsdbackend.onrender.com/api/auth/login",
+
         {
           email,
           password
         }
       );
+
+      console.log(response.data);
 
       localStorage.setItem(
         "token",
@@ -29,11 +35,15 @@ const Login = ({ setIsLoggedIn }) => {
 
     } catch (error) {
 
-      console.log(error);
+      console.log(error.response?.data);
 
-      alert("Invalid Credentials");
+      alert(
+        error.response?.data?.message ||
+        "Login Failed"
+      );
     }
   };
+
 
   return (
 
